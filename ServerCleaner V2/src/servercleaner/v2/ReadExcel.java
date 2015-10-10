@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -30,6 +31,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ReadExcel {
 
     private RepositorioChamados listaChamados;
+    private static String dirBr = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
+    private static String dirBb = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
 
     /**
      *
@@ -57,22 +60,24 @@ public class ReadExcel {
     }
 
     public void verificaDiretorios() {
-        String diretorio = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
-        File file = new File(diretorio);
-        File listaArquivos[] = file.listFiles();
-        int i = 0;
-        for (int j = listaArquivos.length; i < j; i++) {
-            File arquivo = listaArquivos[i];
-            if (arquivo.isDirectory()) {
-                File[] files = arquivo.listFiles();
+        File diretorio = new File(dirBr);
+        File[] files = diretorio.listFiles();
+        for (File DiretorioEstabelecimento : files) {
+            if (DiretorioEstabelecimento.isDirectory()) {
+                System.out.println("\nEmpresa: " + DiretorioEstabelecimento.getName());
 
+                File[] files2 = DiretorioEstabelecimento.listFiles();
+                for (File DiretorioAtendimento : files2) {
+                    if (DiretorioAtendimento.isDirectory()) {
+                        System.out.println("Atendimento: " + DiretorioAtendimento.getName());
+                    }
+                }
             }
-            System.out.println(arquivo.getName());
         }
     }
 
     public void removerArquivos(File f) {
-        // Se o arquivo passado for um diretório
+        // Se o DiretorioEstabelecimento passado for um diretório
         if (f.isDirectory()) {
             /* Lista todos os arquivos do diretório em um array
              de objetos File */
@@ -85,7 +90,7 @@ public class ReadExcel {
     }
 
     public void removerArquivosComRaiz(File f) {
-        // Se o arquivo passado for um diretório
+        // Se o DiretorioEstabelecimento passado for um diretório
         if (f.isDirectory()) {
             File[] files = f.listFiles();
             for (File file : files) {
@@ -206,7 +211,8 @@ public class ReadExcel {
     }
 
     /**
-     * Este metodo irá ler o arquivo excel e jogará os chamados em um arrayList
+     * Este metodo irá ler o DiretorioEstabelecimento excel e jogará os chamados
+     * em um arrayList
      */
     public void LerArquivoSomenteCodigo() {
         try {
@@ -219,7 +225,6 @@ public class ReadExcel {
                         if (cellFor.getColumnIndex() == 1) {
                             listaChamados.addChamados(new Chamados(cellFor.getNumericCellValue()));
                         }
-
                     }
                 }
             }
