@@ -1,35 +1,27 @@
 package servercleaner.v2;
 
+import repositorio.RepositorioChamados;
 import model.Chamados;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.File;
+import java.io.FileInputStream;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.apache.poi.hssf.util.CellReference;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import repositorio.RepositorioChamados;
 
 /**
  *
@@ -38,6 +30,7 @@ import repositorio.RepositorioChamados;
 public class ReadExcel {
 
     private RepositorioChamados listaChamados;
+
     /**
      *
      * This method will return the full path of the selected file. If any file
@@ -212,7 +205,10 @@ public class ReadExcel {
         }
     }
 
-    public void LerArquivo() {
+    /**
+     * Este metodo irá ler o arquivo excel e jogará os chamados em um arrayList
+     */
+    public void LerArquivoSomenteCodigo() {
         try {
             FileInputStream file = new FileInputStream(new File(BuscarArquivo()));
             XSSFWorkbook arquivoExcel = new XSSFWorkbook(file);
@@ -231,6 +227,10 @@ public class ReadExcel {
         } catch (Exception ex) {
             Logger.getLogger(ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public void a() {
 
     }
 }
