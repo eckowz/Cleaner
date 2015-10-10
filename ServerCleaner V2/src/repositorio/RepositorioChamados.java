@@ -1,4 +1,3 @@
-
 package repositorio;
 
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import model.Chamados;
  * @author gserafini
  */
 public class RepositorioChamados {
+
     private List<Chamados> listaChamados;
 
     public RepositorioChamados() {
@@ -19,4 +19,5 @@ public class RepositorioChamados {
     public boolean addChamados(Chamados chamado) {
         return (listaChamados.add(chamado));
     }
+
 }

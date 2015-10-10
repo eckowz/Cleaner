@@ -16,7 +16,7 @@ public class ServerCleanerV2 {
      */
     public static void main(String[] args) {
         ReadExcel vaiPlaneta = new ReadExcel();
-        //vaiPlaneta.Executa();
+        vaiPlaneta.verificaDiretorios();
     }
 
 }
