@@ -20,4 +20,16 @@ public class RepositorioChamados {
         return (listaChamados.add(chamado));
     }
 
+    public List<Chamados> getListChamados() {
+        return listaChamados;
+    }
+
+    public boolean verificaChamado(String x) {
+        for (Chamados chamado : listaChamados) {
+            if (chamado.getChamado().equals(x)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

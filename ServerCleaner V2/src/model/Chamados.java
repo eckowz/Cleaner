@@ -8,14 +8,14 @@ import java.util.Date;
  */
 public class Chamados {
 
-    private double chamado;
+    private String chamado;
     private Date dataEncerramento;
 
-    public double getChamado() {
+    public String getChamado() {
         return chamado;
     }
 
-    public void setChamado(double chamado) {
+    public void setChamado(String chamado) {
         this.chamado = chamado;
     }
 
@@ -27,13 +27,16 @@ public class Chamados {
         this.dataEncerramento = dataEncerramento;
     }
 
-    public Chamados(double chamado, Date dataEncerramento) {
+    public Chamados(String chamado, Date dataEncerramento) {
         this.chamado = chamado;
         this.dataEncerramento = dataEncerramento;
     }
 
-    public Chamados(double chamado) {
+    public Chamados(String chamado) {
         this.chamado = chamado;
+    }
+
+    public Chamados() {
     }
 
 }
