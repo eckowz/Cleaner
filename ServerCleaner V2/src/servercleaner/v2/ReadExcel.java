@@ -28,19 +28,29 @@ public class ReadExcel {
     private static String dirBr = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
     private static String dirBb = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
 
+    public ReadExcel() {
+        this.listaChamados = new RepositorioChamados();
+    }
+
     /**
      *
      * This method will return the full path of the selected file. If any file
      * is selected, the application will be closed.
      *
+     *
      * @return retorna o caminho absoluto do arquivo selecionado.
      */
     public static String BuscarArquivo() {
         JOptionPane.showMessageDialog(null, "Escolha o arquivo a ser aberto", "Atenção", JOptionPane.WARNING_MESSAGE);
-
         JFileChooser fileChooser = new JFileChooser();
+
+        /**
+         * @param diretorio define a inicialização do fileChooser na area de
+         * trabalho do usuário
+         */
         File diretorio = new File(System.getProperty("user.home") + "\\Desktop\\");
         fileChooser.setCurrentDirectory(diretorio);
+        fileChooser.addChoosableFileFilter(new FiltroXlsx());
         int retorno = fileChooser.showOpenDialog(null);
         String arquivo = null;
         if (retorno == JFileChooser.APPROVE_OPTION) {
@@ -51,10 +61,6 @@ public class ReadExcel {
             System.exit(0);
         }
         return arquivo;
-    }
-
-    public ReadExcel() {
-        this.listaChamados = new RepositorioChamados();
     }
 
     public void verificaDiretorios() {
