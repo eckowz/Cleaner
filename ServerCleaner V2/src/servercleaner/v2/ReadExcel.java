@@ -11,6 +11,9 @@ import java.io.FileInputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import logs.CriaDiretorioLogs;
+import logs.CriaTxtLogs;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,11 +28,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ReadExcel {
 
     private RepositorioChamados listaChamados;
-    private static String dirBr = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
-    private static String dirBb = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
+    private CriaDiretorioLogs criaDir = new CriaDiretorioLogs();
+    private CriaTxtLogs criaArq = new CriaTxtLogs();
+    public static final String dirBr = "C:\\Users\\gserafini\\Desktop";
+    public static final String dirBb = "C:\\Users\\gserafini\\Desktop";
 
     public ReadExcel() {
         this.listaChamados = new RepositorioChamados();
+        criaDir.criaDiretorio();
     }
 
     /**
@@ -40,7 +46,7 @@ public class ReadExcel {
      *
      * @return retorna o caminho absoluto do arquivo selecionado.
      */
-    public static String BuscarArquivo() {
+    public String BuscarArquivo() {
         JOptionPane.showMessageDialog(null, "Escolha o arquivo a ser aberto", "Atenção", JOptionPane.WARNING_MESSAGE);
         JFileChooser fileChooser = new JFileChooser();
 
@@ -50,8 +56,9 @@ public class ReadExcel {
          */
         File diretorio = new File(System.getProperty("user.home") + "\\Desktop\\");
         fileChooser.setCurrentDirectory(diretorio);
-        fileChooser.addChoosableFileFilter(new FiltroXlsx());
-        int retorno = fileChooser.showOpenDialog(null);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Apenas XLSX", "xlsx"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int retorno = fileChooser.showOpenDialog(fileChooser);
         String arquivo = null;
         if (retorno == JFileChooser.APPROVE_OPTION) {
             arquivo = fileChooser.getSelectedFile().getAbsolutePath();
@@ -63,25 +70,38 @@ public class ReadExcel {
         return arquivo;
     }
 
-    public void verificaDiretorios() {
-        File diretorio = new File(dirBr);
+    public void verificaDiretorios(String dir) {
+        int contGeral = 0, contInt = 0, cont = 0;
+        File diretorio = new File(dir);
         File[] files = diretorio.listFiles();
         for (File DiretorioEstabelecimento : files) {
+            contGeral = contGeral + contInt;
+            contInt = 0;
             if (DiretorioEstabelecimento.isDirectory()) {
-                System.out.println("\nEmpresa: " + DiretorioEstabelecimento.getName());
+                //System.out.println("\nEmpresa: " + DiretorioEstabelecimento.getName());
 
                 File[] files2 = DiretorioEstabelecimento.listFiles();
                 for (File DiretorioAtendimento : files2) {
+                    contInt = contInt + cont;
+                    cont = 0;
                     if (DiretorioAtendimento.isDirectory()) {
-                        System.out.println("\nAtendimento: " + DiretorioAtendimento.getName());
+                        //System.out.println("\nAtendimento: " + DiretorioAtendimento.getName());
                         for (Chamados chamado : listaChamados.getListChamados()) {
                             if (chamado.getChamado().equals(DiretorioAtendimento.getName())) {
-                                System.out.println("Chamado encontrado.");
+                                //System.out.println("Chamado encontrado." + chamado.getChamado());
+                                criaArq.criaArquivoTxt("Chamado finalizado: " + chamado.getChamado());
+                                //removerArquivosComRaiz(DiretorioAtendimento);
+                                cont++;
                             }
                         }
                     }
                 }
             }
+        }
+        if (dir.equals(dirBr)) {
+            criaArq.criaArquivoTxt("Chamados encontrados no diretório BR: " + contGeral);
+        } else {
+            criaArq.criaArquivoTxt("Chamados encontrados no diretório BB: " + contGeral);
         }
     }
 

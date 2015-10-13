@@ -5,6 +5,8 @@
  */
 package servercleaner.v2;
 
+import logs.CriaDiretorioLogs;
+
 /**
  *
  * @author gserafini
@@ -17,7 +19,9 @@ public class ServerCleanerV2 {
     public static void main(String[] args) {
         ReadExcel vaiPlaneta = new ReadExcel();
         vaiPlaneta.LerArquivoSomenteCodigo();
-        vaiPlaneta.verificaDiretorios();
+        vaiPlaneta.verificaDiretorios(ReadExcel.dirBr);
+        vaiPlaneta.verificaDiretorios(ReadExcel.dirBb);
+
     }
 
 }
