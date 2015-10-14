@@ -19,9 +19,9 @@ public class CriaTxtLogs {
     public void criaArquivoTxt(String texto) {
         try {
             File diretorio = new File(System.getProperty("user.home") + "\\Desktop\\" + CriaDiretorioLogs.nomeDiretorio);
-            System.out.println(diretorio);
+            //System.out.println(diretorio);
             String nomeArq = (mostraDataHoraNomeArq() + ".txt");
-            System.out.println(nomeArq);
+            //System.out.println(nomeArq);
             File arq = new File(diretorio, nomeArq);
             if (!arq.exists()) {
                 arq.createNewFile();
