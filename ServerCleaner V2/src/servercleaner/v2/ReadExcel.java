@@ -30,8 +30,9 @@ public class ReadExcel {
     private RepositorioChamados listaChamados;
     private CriaDiretorioLogs criaDir = new CriaDiretorioLogs();
     private CriaTxtLogs criaArq = new CriaTxtLogs();
-    public static final String dirBr = "C:\\Users\\gserafini\\Desktop";
-    public static final String dirBb = "C:\\Users\\gserafini\\Desktop";
+    //public static final String dir1 = "C:\\Users\\gserafini\\Desktop\\Nova pasta\\Petrobras";
+    public static String dir1 = "C:\\Users\\gserafini\\Desktop\\Nova pasta\\Petrobras";
+    public static String dir2 = "C:\\Users\\gserafini\\Desktop\\Nova pasta\\Petrobras";
 
     public ReadExcel() {
         this.listaChamados = new RepositorioChamados();
@@ -89,8 +90,8 @@ public class ReadExcel {
                         for (Chamados chamado : listaChamados.getListChamados()) {
                             if (chamado.getChamado().equals(DiretorioAtendimento.getName())) {
                                 //System.out.println("Chamado encontrado." + chamado.getChamado());
-                                criaArq.criaArquivoTxt("Chamado finalizado: " + chamado.getChamado());
-                                //removerArquivosComRaiz(DiretorioAtendimento);
+                                criaArq.criaArquivoTxt(" Chamado finalizado: " + chamado.getChamado());
+                                removerArquivosComRaiz(DiretorioAtendimento);
                                 cont++;
                             }
                         }
@@ -98,13 +99,18 @@ public class ReadExcel {
                 }
             }
         }
-        if (dir.equals(dirBr)) {
+        if (dir.equals(dir1)) {
             criaArq.criaArquivoTxt("Chamados encontrados no diretório BR: " + contGeral);
         } else {
             criaArq.criaArquivoTxt("Chamados encontrados no diretório BB: " + contGeral);
         }
     }
 
+    /**
+     * Metodo que remove os arquivos mas mantem a pasta.
+     *
+     * @param f
+     */
     public void removerArquivos(File f) {
         // Se o DiretorioEstabelecimento passado for um diretório
         if (f.isDirectory()) {
@@ -118,9 +124,16 @@ public class ReadExcel {
         }
     }
 
+    /**
+     * Metodo que remove os arquivos e também a pasta.
+     *
+     * @param f
+     */
     public void removerArquivosComRaiz(File f) {
         // Se o DiretorioEstabelecimento passado for um diretório
         if (f.isDirectory()) {
+            /* Lista todos os arquivos do diretório em um array
+             de objetos File */
             File[] files = f.listFiles();
             for (File file : files) {
                 removerArquivosComRaiz(file);
