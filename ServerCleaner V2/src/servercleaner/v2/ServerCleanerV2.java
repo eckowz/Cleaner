@@ -16,12 +16,13 @@ public class ServerCleanerV2 {
     /**
      * @param args the command line arguments
      */
+    /*
     public static void main(String[] args) {
         ReadExcel vaiPlaneta = new ReadExcel();
         vaiPlaneta.LerArquivoSomenteCodigo();
         vaiPlaneta.verificaDiretorios(ReadExcel.dirBr);
-        vaiPlaneta.verificaDiretorios(ReadExcel.dirBb);
+        //vaiPlaneta.verificaDiretorios(ReadExcel.dirBb);
 
-    }
+    }*/
 
 }
