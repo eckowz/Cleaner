@@ -5,7 +5,12 @@
  */
 package interfaces;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import servercleaner.v2.ReadExcel;
+import static servercleaner.v2.ReadExcel.dir1;
+import static servercleaner.v2.ReadExcel.dir2;
 
 /**
  *
@@ -68,13 +73,28 @@ public class JfPrincipal extends javax.swing.JFrame {
         jTextField2.setText(ReadExcel.dir1);
 
         jToggleButton2.setText("Alterar diretório");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         varDir1.setSelected(true);
         varDir1.setText("Varrer diretório 1");
         varDir1.setName(""); // NOI18N
+        varDir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                varDir1ActionPerformed(evt);
+            }
+        });
 
         varDir2.setSelected(true);
         varDir2.setText("Varrer diretório 2");
+        varDir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                varDir2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
         jdpPrincipal.setLayout(jdpPrincipalLayout);
@@ -82,24 +102,27 @@ public class JfPrincipal extends javax.swing.JFrame {
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdpPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdpPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(varDir1)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                                .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(69, 69, 69))
                     .addGroup(jdpPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(varDir2)
-                            .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(18, 18, 18)
-                .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                                .addComponent(jToggleButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,18 +130,18 @@ public class JfPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jToggleButton1)
+                    .addComponent(jToggleButton2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(varDir1)
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jToggleButton2)
+                    .addComponent(jToggleButton1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(varDir2)
-                .addContainerGap(415, Short.MAX_VALUE))
+                .addContainerGap(416, Short.MAX_VALUE))
         );
         jdpPrincipal.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -199,6 +222,22 @@ public class JfPrincipal extends javax.swing.JFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        File diretorio = new File(System.getProperty("user.home") + "\\Desktop\\");
+        fileChooser.setCurrentDirectory(diretorio);
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int retorno = fileChooser.showOpenDialog(this);
+        String arquivo = null;
+        if (retorno == JFileChooser.APPROVE_OPTION) {
+            arquivo = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+        if (arquivo == null) {
+            JOptionPane.showMessageDialog(null, "Arquivo não selecionado. Sistema encerrado.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            System.exit(0);
+        }
+        dir1 = arquivo;
+        jTextField1.setText(dir1);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
@@ -210,6 +249,34 @@ public class JfPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        File diretorio = new File(System.getProperty("user.home") + "\\Desktop\\");
+        fileChooser.setCurrentDirectory(diretorio);
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int retorno = fileChooser.showOpenDialog(this);
+        String arquivo = null;
+        if (retorno == JFileChooser.APPROVE_OPTION) {
+            arquivo = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+        if (arquivo == null) {
+            JOptionPane.showMessageDialog(null, "Arquivo não selecionado. Sistema encerrado.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            System.exit(0);
+        }
+        dir2 = arquivo;
+        jTextField2.setText(dir2);
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void varDir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varDir1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_varDir1ActionPerformed
+
+    private void varDir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varDir2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_varDir2ActionPerformed
 
     /**
      * @param args the command line arguments
