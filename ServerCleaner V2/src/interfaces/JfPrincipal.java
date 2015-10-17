@@ -45,8 +45,8 @@ public class JfPrincipal extends javax.swing.JFrame {
         varDir2 = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemCarregar = new javax.swing.JMenuItem();
+        jMenuItemSair = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,19 +82,9 @@ public class JfPrincipal extends javax.swing.JFrame {
         varDir1.setSelected(true);
         varDir1.setText("Varrer diretório 1");
         varDir1.setName(""); // NOI18N
-        varDir1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                varDir1ActionPerformed(evt);
-            }
-        });
 
         varDir2.setSelected(true);
         varDir2.setText("Varrer diretório 2");
-        varDir2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                varDir2ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
         jdpPrincipal.setLayout(jdpPrincipalLayout);
@@ -153,32 +143,22 @@ public class JfPrincipal extends javax.swing.JFrame {
         jdpPrincipal.setLayer(varDir2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("Iniciar");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
-            }
-        });
 
-        jMenuItem1.setText("Carregar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCarregar.setText("Carregar");
+        jMenuItemCarregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemCarregarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMenuItemCarregar);
 
-        jMenuItem2.setText("Sair");
-        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem2MouseClicked(evt);
-            }
-        });
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemSair.setText("Sair");
+        jMenuItemSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItemSairActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(jMenuItemSair);
 
         jMenuBar1.add(jMenu1);
 
@@ -202,23 +182,23 @@ public class JfPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jMenu1ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCarregarActionPerformed
         // TODO add your handling code here:
         ReadExcel readExcel = new ReadExcel();
-        readExcel.LerArquivoSomenteCodigo();
-        if (varDir1.isEnabled()) {
-            readExcel.verificaDiretorios(ReadExcel.dir1);
-        }
+        if (varDir1.isSelected() || varDir2.isSelected()) {
+            boolean arquivoLido = readExcel.LerArquivoSomenteCodigo();
+            if (varDir1.isSelected() && arquivoLido) {
+                readExcel.verificaDiretorios(ReadExcel.dir1);
+            }
 
-        if (varDir2.isEnabled()) {
-            readExcel.verificaDiretorios(ReadExcel.dir2);
+            if (varDir2.isSelected() && arquivoLido) {
+                readExcel.verificaDiretorios(ReadExcel.dir2);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Se nenhum diretório for selecionado,"
+                    + "\no sistema não será executado.", "Atenção", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemCarregarActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
@@ -231,24 +211,10 @@ public class JfPrincipal extends javax.swing.JFrame {
         String arquivo = null;
         if (retorno == JFileChooser.APPROVE_OPTION) {
             arquivo = fileChooser.getSelectedFile().getAbsolutePath();
+            dir1 = arquivo;
+            jTextField1.setText(dir1);
         }
-        if (arquivo == null) {
-            JOptionPane.showMessageDialog(null, "Arquivo não selecionado. Sistema encerrado.", "Atenção", JOptionPane.WARNING_MESSAGE);
-            System.exit(0);
-        }
-        dir1 = arquivo;
-        jTextField1.setText(dir1);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
-
-    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jMenuItem2MouseClicked
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // TODO add your handling code here:
@@ -258,25 +224,18 @@ public class JfPrincipal extends javax.swing.JFrame {
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
         int retorno = fileChooser.showOpenDialog(this);
-        String arquivo = null;
+        String arquivo;
         if (retorno == JFileChooser.APPROVE_OPTION) {
             arquivo = fileChooser.getSelectedFile().getAbsolutePath();
+            dir2 = arquivo;
+            jTextField2.setText(dir2);
         }
-        if (arquivo == null) {
-            JOptionPane.showMessageDialog(null, "Arquivo não selecionado. Sistema encerrado.", "Atenção", JOptionPane.WARNING_MESSAGE);
-            System.exit(0);
-        }
-        dir2 = arquivo;
-        jTextField2.setText(dir2);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
-    private void varDir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varDir1ActionPerformed
+    private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_varDir1ActionPerformed
-
-    private void varDir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varDir2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_varDir2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItemSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,8 +278,8 @@ public class JfPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemCarregar;
+    private javax.swing.JMenuItem jMenuItemSair;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton jToggleButton1;
