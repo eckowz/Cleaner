@@ -7,8 +7,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +15,12 @@ import java.util.logging.Logger;
  */
 public class CriaTxtLogs {
 
+    /**
+     * Cria e grava no arquivo de texto a String recebida como mensagem. Arquivo
+     * será criado com o nome da data de sua geração.
+     *
+     * @param texto
+     */
     public void criaArquivoTxt(String texto) {
         try {
             File diretorio = new File(System.getProperty("user.home") + "\\Desktop\\" + CriaDiretorioLogs.nomeDiretorio);
@@ -27,12 +32,13 @@ public class CriaTxtLogs {
                 arq.createNewFile();
             }
             FileWriter gravaNoArq = new FileWriter(arq, true);
-            PrintWriter escreveNoArq = new PrintWriter(gravaNoArq);
-            escreveNoArq.println(mostraDataHora() + texto);
-            escreveNoArq.flush();
-            escreveNoArq.close();
+
+            try (PrintWriter escreveNoArq = new PrintWriter(gravaNoArq)) {
+                escreveNoArq.println(mostraDataHora() + texto);
+                escreveNoArq.close();
+            }
         } catch (IOException ex) {
-            Logger.getLogger(CriaTxtLogs.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possivel criar o arquivo de log.", "ERRO", JOptionPane.WARNING_MESSAGE);
         }
     }
 
