@@ -29,11 +29,23 @@ public class ReadExcel {
     private CriaDiretorioLogs criaDir = new CriaDiretorioLogs();
     private CriaTxtLogs criaArq = new CriaTxtLogs();
     List<File> guardaAtendimentos;
-    //public static String dir1 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
-    //public static String dir2 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
-    public static String dir1 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
-    public static String dir2 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
 
+    /**
+     * Diretório padrão para o dir1.
+     */
+    public static String dir1 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
+    //public static String dir1 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\Petrobras";
+
+    /**
+     * Diretório padrão para o dir2.
+     */
+    public static String dir2 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
+    //public static String dir2 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
+
+    /**
+     * Inicializa os objetos necessários para que não ocorra
+     * NullPointerException.
+     */
     public ReadExcel() {
         this.listaChamados = new RepositorioChamados();
         guardaAtendimentos = new ArrayList<File>();
@@ -42,11 +54,10 @@ public class ReadExcel {
 
     /**
      *
-     * This method will return the full path of the selected file. If any file
-     * is selected, the application will be closed.
+     * This method will return the full path of the selected file.
      *
-     *
-     * @return retorna o caminho absoluto do arquivo selecionado.
+     * @return String <b>arquivo</b> - retorna o caminho absoluto do arquivo
+     * selecionado.
      */
     public String BuscarArquivo() {
         JOptionPane.showMessageDialog(null, "Escolha o arquivo a ser aberto", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -72,9 +83,11 @@ public class ReadExcel {
     }
 
     /**
+     * @deprecated Não utilizado em nenhum momento.
+     *
      * Metodo que remove os arquivos mas mantem a pasta.
      *
-     * @param f
+     * @param f Arquivo/Diretorio a ser removido
      */
     public void removerArquivos(File f) {
         // Se o DiretorioEstabelecimento passado for um diretório
@@ -92,7 +105,7 @@ public class ReadExcel {
     /**
      * Metodo que remove os arquivos e também a pasta.
      *
-     * @param f
+     * @param f Arquivo/Diretorio a ser removido.
      */
     public void removerArquivosComRaiz(File f) {
         // Se o DiretorioEstabelecimento passado for um diretório
@@ -107,6 +120,13 @@ public class ReadExcel {
         f.delete();
     }
 
+    /**
+     * Analisa o diretorio informado em busca de pastas com o mesmo nome do
+     * informado na planilha.
+     *
+     * @param dir Diretório que será analisado de acordo com a planilha
+     * disponibilizada.
+     */
     public void verificaDiretorios(String dir) {
         int contGeral = 0, contInt = 0, cont = 0;
         File diretorio = new File(dir);
@@ -155,6 +175,10 @@ public class ReadExcel {
 
     /**
      * Este metodo irá ler a planilha excel e jogará os chamados em um arrayList
+     * com o nome de @param listaChamados
+     *
+     * @return boolean - arquivoSelecionado retorna se o arquivo foi lido com
+     * sucesso ou não.
      */
     public boolean LerArquivoSomenteCodigo() {
         boolean arquivoSelecionado = true;
@@ -185,8 +209,9 @@ public class ReadExcel {
 
     /**
      *
-     * @param quantidade
-     * @return
+     * @param quantidade quantidade de pastas localizadas
+     * @param dir diretorio onde a leitura foi realizada
+     * @return boolean retorna se a limpeza deve ser realizada ou não.
      */
     public boolean confirmaLimpesa(int quantidade, String dir) {
         int op;
@@ -194,10 +219,6 @@ public class ReadExcel {
                 + "do diretório: \n" + dir + "?",
                 "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        if (op == JOptionPane.YES_OPTION) {
-            return true;
-        } else {
-            return false;
-        }
+        return op == JOptionPane.YES_OPTION;
     }
 }
