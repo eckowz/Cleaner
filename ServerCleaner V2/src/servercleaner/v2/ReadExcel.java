@@ -114,6 +114,10 @@ public class ReadExcel {
              de objetos File */
             File[] files = f.listFiles();
             for (File file : files) {
+                long tamArqRemovido = file.length();
+                criaArq.criaArquivoTxt("Nome do arquivo: " + file.getName()
+                        + "\nTamanho aproximado do arquivo removido: "
+                        + tamArqRemovido / 1000 + "Kb.");
                 removerArquivosComRaiz(file);
             }
         }
@@ -128,19 +132,14 @@ public class ReadExcel {
      * disponibilizada.
      */
     public void verificaDiretorios(String dir) {
-        int contGeral = 0, contInt = 0, cont = 0;
+        int contGeral = 0;
         File diretorio = new File(dir);
         File[] files = diretorio.listFiles();
         for (File DiretorioEstabelecimento : files) {
-            contGeral = contGeral + contInt;
-            contInt = 0;
             if (DiretorioEstabelecimento.isDirectory()) {
                 //System.out.println("\nEmpresa: " + DiretorioEstabelecimento.getName());
-
                 File[] files2 = DiretorioEstabelecimento.listFiles();
                 for (File DiretorioAtendimento : files2) {
-                    contInt = contInt + cont;
-                    cont = 0;
                     if (DiretorioAtendimento.isDirectory()) {
                         //System.out.println("\nAtendimento: " + DiretorioAtendimento.getName());
                         for (Chamados chamado : listaChamados.getListChamados()) {
@@ -148,7 +147,7 @@ public class ReadExcel {
                                 //System.out.println("Chamado encontrado." + chamado.getChamado());
                                 criaArq.criaArquivoTxt(" Chamado finalizado: " + chamado.getChamado());
                                 guardaAtendimentos.add(DiretorioAtendimento);
-                                cont++;
+                                contGeral++;
                             }
                         }
                     }
