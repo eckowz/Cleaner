@@ -43,6 +43,11 @@ public class ReadExcel {
     //public static String dir2 = "C:\\Users\\gserafini\\Desktop\\Diretorio de teste Server Cleaner\\B.Branca";
 
     /**
+     * Coluna onde se encontra o numero a ser verificado.
+     */
+    public static int colAtend = 0;
+
+    /**
      * Inicializa os objetos necessários para que não ocorra
      * NullPointerException.
      */
@@ -176,10 +181,11 @@ public class ReadExcel {
      * Este metodo irá ler a planilha excel e jogará os chamados em um arrayList
      * com o nome de @param listaChamados
      *
+     * @param colAtend - Coluna que será lida e armazenada.
      * @return boolean - arquivoSelecionado retorna se o arquivo foi lido com
      * sucesso ou não.
      */
-    public boolean LerArquivoSomenteCodigo() {
+    public boolean LerArquivoSomenteCodigo(int colAtend) {
         boolean arquivoSelecionado = true;
         try {
             File arquivo = new File(BuscarArquivo());
@@ -189,7 +195,7 @@ public class ReadExcel {
             for (Row rowFor : folhaExcel) {
                 if (rowFor.getRowNum() != 0) {
                     for (Cell cellFor : rowFor) {
-                        if (cellFor.getColumnIndex() == 0) {
+                        if (cellFor.getColumnIndex() == colAtend) {
                             cellFor.setCellType(Cell.CELL_TYPE_STRING);
                             listaChamados.addChamados(new Chamados(cellFor.getStringCellValue()));
                         }

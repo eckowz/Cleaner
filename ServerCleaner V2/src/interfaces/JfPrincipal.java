@@ -43,6 +43,8 @@ public class JfPrincipal extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         varDir1 = new javax.swing.JCheckBox();
         varDir2 = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        jtColAtend = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCarregar = new javax.swing.JMenuItem();
@@ -86,6 +88,12 @@ public class JfPrincipal extends javax.swing.JFrame {
         varDir2.setSelected(true);
         varDir2.setText("Varrer diretório 2");
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Coluna onde está o número do atendimento:");
+
+        jtColAtend.setText(Integer.toString(ReadExcel.colAtend));
+        jtColAtend.setToolTipText("0=A; 1=B; 2=C...");
+
         javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
         jdpPrincipal.setLayout(jdpPrincipalLayout);
         jdpPrincipalLayout.setHorizontalGroup(
@@ -97,11 +105,11 @@ public class JfPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(varDir1)
                             .addGroup(jdpPrincipalLayout.createSequentialGroup()
                                 .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(varDir1))
                         .addGap(69, 69, 69))
                     .addGroup(jdpPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -112,12 +120,21 @@ public class JfPrincipal extends javax.swing.JFrame {
                                 .addComponent(jToggleButton1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtColAtend, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdpPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtColAtend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(113, 113, 113)
                 .addGroup(jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jToggleButton2)
@@ -131,7 +148,7 @@ public class JfPrincipal extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(varDir2)
-                .addContainerGap(416, Short.MAX_VALUE))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
         jdpPrincipal.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -141,6 +158,8 @@ public class JfPrincipal extends javax.swing.JFrame {
         jdpPrincipal.setLayer(jToggleButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(varDir1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(varDir2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(jtColAtend, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("Iniciar");
 
@@ -185,8 +204,9 @@ public class JfPrincipal extends javax.swing.JFrame {
     private void jMenuItemCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCarregarActionPerformed
         // TODO add your handling code here:
         ReadExcel readExcel = new ReadExcel();
+        ReadExcel.colAtend = Integer.parseInt(jtColAtend.getText().trim());
         if (varDir1.isSelected() || varDir2.isSelected()) {
-            boolean arquivoLido = readExcel.LerArquivoSomenteCodigo();
+            boolean arquivoLido = readExcel.LerArquivoSomenteCodigo(ReadExcel.colAtend);
             if (varDir1.isSelected() && arquivoLido) {
                 readExcel.verificaDiretorios(ReadExcel.dir1);
             }
@@ -275,6 +295,7 @@ public class JfPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -285,6 +306,7 @@ public class JfPrincipal extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JDesktopPane jdpPrincipal;
+    private javax.swing.JTextField jtColAtend;
     private javax.swing.JCheckBox varDir1;
     private javax.swing.JCheckBox varDir2;
     // End of variables declaration//GEN-END:variables
