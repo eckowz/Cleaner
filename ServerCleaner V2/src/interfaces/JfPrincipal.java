@@ -6,6 +6,7 @@
 package interfaces;
 
 import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import servercleaner.v2.ReadExcel;
@@ -23,6 +24,7 @@ public class JfPrincipal extends javax.swing.JFrame {
      */
     public JfPrincipal() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("../imagens/icone.png")).getImage());
     }
 
     /**
@@ -52,6 +54,8 @@ public class JfPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ServerCleaner V2.0");
+        setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
